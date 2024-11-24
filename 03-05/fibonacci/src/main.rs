@@ -9,27 +9,23 @@ fn main() {
 
 fn get_fib(n: u64) -> u64 {
     if n > 1 {
-        count_fib(n)
+        let mut temp_n_2: u64 = 0;
+        let mut n_2: u64 = 0;
+        let mut n_1: u64 = 1;
+        let mut counter = 0;
+
+        while counter < n - 2 {
+            n_2 = n_1;
+            n_1 += temp_n_2;
+            temp_n_2 = n_2;
+
+            counter += 1;
+        }
+
+        n_1 + n_2
     } else {
         n
     }
-}
-
-fn count_fib(n: u64) -> u64 {
-    let mut temp_n_2: u64 = 0;
-    let mut n_2: u64 = 0;
-    let mut n_1: u64 = 1;
-    let mut counter = 0;
-
-    while counter < n - 2 {
-        n_2 = n_1;
-        n_1 += temp_n_2;
-        temp_n_2 = n_2;
-
-        counter += 1;
-    }
-
-    n_1 + n_2
 }
 
 fn get_fib_slow(n: u64) -> u64 {
