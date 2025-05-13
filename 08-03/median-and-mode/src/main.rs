@@ -43,7 +43,7 @@ fn get_input(prompt: &str) -> u8 {
     }
 }
 
-fn get_median(nums: &mut Vec<u8>) -> f64 {
+fn get_median(nums: &mut [u8]) -> f64 {
     nums.sort_unstable();
     let len = nums.len();
 
@@ -55,7 +55,7 @@ fn get_median(nums: &mut Vec<u8>) -> f64 {
     }
 }
 
-fn get_mode(nums: &Vec<u8>) -> u8 {
+fn get_mode(nums: &[u8]) -> u8 {
     let mut occurrences = HashMap::new();
 
     // Count occurrences of each number
