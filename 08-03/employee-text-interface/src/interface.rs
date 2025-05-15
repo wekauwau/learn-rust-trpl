@@ -1,26 +1,42 @@
 use std::io::stdin;
 
-pub fn get_input() -> String {
-    println!("Enter command:");
+use company::Company;
 
-    let mut input = String::new();
-    stdin()
-        .read_line(&mut input)
-        .expect("Error: Failed to read line!");
+pub mod company;
 
-    input
-}
+impl Company {
+    fn get_input(&self) -> String {
+        println!("Enter command:");
 
-fn command(command: &str) {
-    let mut words = get_input().split_whitespace();
-    let first = words.next().unwrap().to_ascii_lowercase();
+        let mut input = String::new();
+        stdin()
+            .read_line(&mut input)
+            .expect("Error: Failed to read line!");
 
-    if first == "add" {
-        // add(name, department);
-    } else if first == "list" {
-        match words.next() {
-            Some(department) => list_department(department),
-            None => list(),
+        input
+    }
+
+    pub fn command(&self) -> bool {
+        let again = true;
+
+        println!();
+        println!("-----------------------------------------------------");
+        let input = self.get_input();
+        println!("-----------------------------------------------------");
+
+        if input.trim() == "list department" {
+            self.list_department();
+        } else {
+            self.help();
         }
+
+        println!("-----------------------------------------------------");
+        again
+    }
+
+    fn help(&self) {
+        println!("Usage:");
+        print!("list department\t\t\t");
+        println!("List all departments");
     }
 }
