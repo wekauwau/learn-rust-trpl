@@ -25,6 +25,16 @@ impl Company {
         }
     }
 
+    pub fn list_employee(&self, name: String) {
+        match self.department.get(&name) {
+            Some(department) => {
+                println!("{} Department's employees:", name);
+                department.list();
+            }
+            None => println!("There is no {} Department", &name),
+        }
+    }
+
     pub fn add_department(&mut self, name: String) {
         self.department.entry(name).or_insert(Department::new());
     }

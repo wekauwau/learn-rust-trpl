@@ -30,9 +30,17 @@ impl Company {
 
         if input_trim == "list department" {
             self.list_department();
+        } else if first == "list" {
+            let name = command.collect::<Vec<_>>().join(" ");
+
+            if name.is_empty() {
+                self.help();
+            } else {
+                self.list_employee(name);
+            }
         } else if first == "add" {
-            let rest = command.collect::<Vec<_>>().join(" ");
-            self.add_department(rest);
+            let name = command.collect::<Vec<_>>().join(" ");
+            self.add_department(name);
         } else if input_trim == "exit" {
             again = false;
         } else {
@@ -47,6 +55,8 @@ impl Company {
         println!("Usage:");
         print!("list department\t\t\t");
         println!("List all departments");
+        print!("list <department>\t\t");
+        println!("List <departments>'s employees");
         print!("add <department>\t\t");
         println!("Add department");
         print!("exit\t\t\t\t");

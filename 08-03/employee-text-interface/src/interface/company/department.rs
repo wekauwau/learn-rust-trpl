@@ -8,4 +8,10 @@ impl Department {
             employees: Vec::new(),
         }
     }
+
+    pub fn list(&self) {
+        for name in &self.employees {
+            println!("{}", name);
+        }
+    }
 }
