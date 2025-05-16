@@ -16,7 +16,7 @@ impl Company {
         input
     }
 
-    pub fn command(&self) -> bool {
+    pub fn command(&mut self) -> bool {
         let again = true;
 
         println!();
@@ -24,8 +24,14 @@ impl Company {
         let input = self.get_input();
         println!("-----------------------------------------------------");
 
+        let mut command = input.split_whitespace();
+        let first = command.next().unwrap_or("");
+
         if input.trim() == "list department" {
             self.list_department();
+        } else if first == "add" {
+            let rest = command.collect::<Vec<_>>().join(" ");
+            self.add_department(rest);
         } else {
             self.help();
         }
@@ -38,5 +44,7 @@ impl Company {
         println!("Usage:");
         print!("list department\t\t\t");
         println!("List all departments");
+        print!("add <department>\t\t");
+        println!("Add department");
     }
 }
