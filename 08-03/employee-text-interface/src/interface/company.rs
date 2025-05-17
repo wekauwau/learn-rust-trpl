@@ -25,11 +25,14 @@ impl Company {
         }
     }
 
-    pub fn list_employee(&self, name: String) {
-        match self.department.get(&name) {
+    pub fn list_employee(&self, name: &String) {
+        match self.department.get(name) {
             Some(department) => {
                 println!("{} Department's employees:", name);
-                department.list();
+
+                for name in &department.employees {
+                    println!("{}", name);
+                }
             }
             None => println!("There is no {} Department", &name),
         }
@@ -37,5 +40,12 @@ impl Company {
 
     pub fn add_department(&mut self, name: String) {
         self.department.entry(name).or_insert(Department::new());
+    }
+
+    pub fn add_employee(&mut self, employee: String, department: String) {
+        match self.department.get_mut(&employee) {
+            Some(department) => department.employees.push(employee),
+            None => println!("There is no {} Department", &department),
+        }
     }
 }

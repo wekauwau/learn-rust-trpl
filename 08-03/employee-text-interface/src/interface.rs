@@ -17,38 +17,66 @@ impl Company {
     }
 
     pub fn command(&mut self) -> bool {
-        let mut again = true;
-
         println!();
         println!("-----------------------------------------------------");
         let input = self.get_input();
         println!("-----------------------------------------------------");
 
-        let mut command = input.split_whitespace();
         let input_trim = input.trim();
-        let first = command.next().unwrap_or("");
 
-        if input_trim == "list department" {
-            self.list_department();
-        } else if first == "list" {
-            let name = command.collect::<Vec<_>>().join(" ");
+        match input_trim {
+            "list department" => self.list_department(),
+            "exit" => return false,
+            _ => {
+                let command: Vec<&str> = input.split_whitespace().collect();
+                match command[0] {
+                    "list" => {
+                        let name = command[1..].join(" ");
 
-            if name.is_empty() {
-                self.help();
-            } else {
-                self.list_employee(name);
+                        match name.is_empty() {
+                            false => self.list_employee(&name),
+                            true => self.help(),
+                        }
+                    }
+                    "add" => match command.iter().position(|&w| w == "to") {
+                        Some(index) => {}
+                        None => {
+                            let name = command[1..].join(" ");
+
+                            match name.is_empty() {
+                                false => self.add_department(name),
+                                true => self.help(),
+                            }
+                        }
+                    },
+                    _ => self.help(),
+                }
             }
-        } else if first == "add" {
-            let name = command.collect::<Vec<_>>().join(" ");
-            self.add_department(name);
-        } else if input_trim == "exit" {
-            again = false;
-        } else {
-            self.help();
         }
 
+        // let first = command.next().unwrap_or("");
+
+        // if input_trim == "list department" {
+        //     self.list_department();
+        // } else if first == "list" {
+        //     let name = command.collect::<Vec<_>>().join(" ");
+        //
+        //     if name.is_empty() {
+        //         self.help();
+        //     } else {
+        //         self.list_employee(name);
+        //     }
+        // } else if first == "add" {
+        //     let name = command.collect::<Vec<_>>().join(" ");
+        //     self.add_department(name);
+        // } else if input_trim == "exit" {
+        //     again = false;
+        // } else {
+        //     self.help();
+        // }
+
         println!("-----------------------------------------------------");
-        again
+        true
     }
 
     fn help(&self) {
