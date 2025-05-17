@@ -15,6 +15,20 @@ impl Company {
         }
     }
 
+    pub fn list_all(&self) {
+        let mut department_names: Vec<&String> = self.department.keys().collect();
+        department_names.sort();
+
+        for department in department_names {
+            println!("{} Department", department);
+            let name = self.department.get(department).unwrap();
+            for employee in &name.employees {
+                println!("{}", employee);
+            }
+            println!();
+        }
+    }
+
     pub fn list_department(&self) {
         let mut department_names: Vec<&String> = self.department.keys().collect();
         department_names.sort();
@@ -43,7 +57,8 @@ impl Company {
     }
 
     pub fn add_employee(&mut self, employee: String, department: String) {
-        match self.department.get_mut(&employee) {
+        // FIX: employee with same name
+        match self.department.get_mut(&department) {
             Some(department) => department.employees.push(employee),
             None => println!("There is no {} Department", &department),
         }

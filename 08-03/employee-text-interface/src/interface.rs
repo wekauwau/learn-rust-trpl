@@ -25,6 +25,7 @@ impl Company {
         let input_trim = input.trim();
 
         match input_trim {
+            "list all" => self.list_all(),
             "list department" => self.list_department(),
             "exit" => return false,
             _ => {
@@ -39,7 +40,15 @@ impl Company {
                         }
                     }
                     "add" => match command.iter().position(|&w| w == "to") {
-                        Some(index) => {}
+                        Some(index) => {
+                            let employee = command[1..index].join(" ");
+                            let department = command[index + 1..].join(" ");
+
+                            match employee.is_empty() || department.is_empty() {
+                                false => self.add_employee(employee, department),
+                                true => self.help(),
+                            }
+                        }
                         None => {
                             let name = command[1..].join(" ");
 
