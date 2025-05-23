@@ -1,5 +1,9 @@
 use std::io;
 
+mod celcius;
+mod fahrenheit;
+mod kelvin;
+
 // progress: https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
 
 fn main() {
@@ -44,10 +48,11 @@ fn get_choice() -> i64 {
 
     loop {
         println!();
-        println!("1. F to C");
-        println!("2. C to F");
+        println!("1. Celcius");
+        println!("2. Fahrenheit");
+        println!("3. Fahrenheit");
         println!("0. Exit");
-        println!("Choose:");
+        println!("Choose temperature:");
 
         if get_int(&mut choice) && (0..=2).contains(&choice) {
             return choice;
@@ -77,10 +82,10 @@ fn get_float(n: &mut f64) -> bool {
 }
 
 fn get_input() -> String {
-    let mut container = String::new();
+    let mut input = String::new();
     io::stdin()
-        .read_line(&mut container)
+        .read_line(&mut input)
         .expect("Failed to read line!");
 
-    container
+    input
 }
